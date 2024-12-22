@@ -4,4 +4,4 @@ This app is a placeholder meant for some learning purposes on CI + CD and deploy
 
 `.github/workflows/ci.yml` - Github Actions CI configuration
 
-`buildspec.yml` - AWS CodeBuild configuration
+`buildspec.yml` - AWS CodeBuild configuration, which will be triggered on every PUSH at main
