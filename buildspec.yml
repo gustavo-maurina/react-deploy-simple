@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      node: 22
+
+  pre_build:
+    commands:
+      - yarn install --frozen-lockfile
+
+  build:
+    commands:
+      - yarn build
