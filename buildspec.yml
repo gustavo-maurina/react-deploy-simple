@@ -12,3 +12,8 @@ phases:
   build:
     commands:
       - yarn build
+
+  post_build:
+    commands:
+      - aws s3 sync --delete ./dist s3://${BUCKET_NAME}
+      - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRO_ID} --paths /index.html
