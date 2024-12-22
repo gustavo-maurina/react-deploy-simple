@@ -1,0 +1,40 @@
+name: Simple React Deploy CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+
+      - name: Remove prepare script (no need to run it on CI)
+        run: npm pkg delete scripts.prepare
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Prettier
+        run: yarn ci:prettier
+
+      - name: Linting
+        run: yarn lint
+
+      - name: Typechecking
+        run: yarn type-check
